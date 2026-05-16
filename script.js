@@ -238,7 +238,6 @@ let enCoursDeCliqueVisage = false;
 
 // ===== CORPS =====
 
-// 1. On définit les ordres (à mettre au début du script)
 
 
 // 2. La fonction maîtresse (ton "chef d'orchestre")
@@ -259,7 +258,6 @@ ORDRE_DESSOUS.forEach(cat => {
         zone.insertBefore(img, mannequin);
     }
 });
-
     // ÉTAPE B : On place les éléments DEVANT le mannequin
     ORDRE_DESSUS.forEach(cat => {
         const fichier = (apercu && cat === categorieActuelle) ? apercu : selections[cat];
@@ -270,8 +268,8 @@ ORDRE_DESSOUS.forEach(cat => {
             zone.appendChild(img); // APPEND = DEVANT
         }
     });
-}
-
+  }
+  
 function construireCategories() {
   const cont = document.getElementById('categories');
   cont.innerHTML = '';
@@ -449,28 +447,53 @@ function changerPeau(fichier, cercle) {
 
 // ===== VISAGE =====
 
-function mettreAJourCalquesVisage() {
-  document.querySelectorAll('.calque-visage').forEach(el => el.remove());
-  const ordreSous = ['Iris', 'Rouges à lèvres'];
-  const ordreDesssus = ['Blush', 'Eye liners', 'Fards à paupières', 'Cils', 'Colliers','Boucles d"oreilles','Coiffures',];
+// ← DEHORS de mettreAJourCalques
+function sauvegarder() {
+  localStorage.setItem('selections', JSON.stringify(selections));
+  localStorage.setItem('selectionsVisage', JSON.stringify(selectionsVisage));
+  localStorage.setItem('mannequinCorps', document.getElementById('mannequin-corps').src);
+  localStorage.setItem('mannequinVisage', mannequinVisageActuel);
+}
 
-  function ajouterCalque(fichier) {
-    const img = document.createElement('img');
-    img.src = fichier;
-    img.className = 'calque-visage';
-    img.style.cssText = 'position:absolute;top:0;left:0;height:100%;width:auto;pointer-events:none;';
-    document.getElementById('zone-visage').appendChild(img);
-  }
+function restaurer() {
+  const s = localStorage.getItem('selections');
+  const sv = localStorage.getItem('selectionsVisage');
+  const mc = localStorage.getItem('mannequinCorps');
+  const mv = localStorage.getItem('mannequinVisage');
+  if (s) selections = JSON.parse(s);
+  if (sv) selectionsVisage = JSON.parse(sv);
+  if (mc) document.getElementById('mannequin-corps').src = mc;
+  if (mv) mannequinVisageActuel = mv;
+}
 
-  ordreSous.forEach(cat => {
-    const fichier = (apercuVisage && cat === categorieVisage) ? apercuVisage : selectionsVisage[cat];
-    if (fichier) ajouterCalque(fichier);
+restaurer(); // ← appelée une fois au chargement
+
+function mettreAJourCalques() {
+  document.querySelectorAll('.calque-vetement, .calque-derriere').forEach(el => el.remove());
+  const zone = document.getElementById('zone-mannequin');
+  const mannequin = document.getElementById('mannequin-corps');
+
+  ORDRE_DESSOUS.forEach(cat => {
+    const fichier = (apercu && cat === categorieActuelle) ? apercu : selections[cat];
+    if (fichier) {
+      const img = document.createElement('img');
+      img.src = fichier;
+      img.className = 'calque-derriere';
+      zone.insertBefore(img, mannequin);
+    }
   });
- ajouterCalque(mannequinVisageActuel);
-  ordreDesssus.forEach(cat => {
-    const fichier = (apercuVisage && cat === categorieVisage) ? apercuVisage : selectionsVisage[cat];
-    if (fichier) ajouterCalque(fichier);
+
+  ORDRE_DESSUS.forEach(cat => {
+    const fichier = (apercu && cat === categorieActuelle) ? apercu : selections[cat];
+    if (fichier) {
+      const img = document.createElement('img');
+      img.src = fichier;
+      img.className = 'calque-vetement';
+      zone.appendChild(img);
+    }
   });
+
+  sauvegarder(); // ← appelée à la fin, pas définie
 }
 
 function construireCategoriesVisage() {
