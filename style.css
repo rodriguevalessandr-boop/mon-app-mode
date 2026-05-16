@@ -23,7 +23,16 @@
       position: relative;
       overflow: hidden;
     }
- .bouches-decor {
+
+    #vue-accueil h1 {
+      font-family: 'Montez', cursive;
+      color: #733e75;
+      font-size: 4rem;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+/* Le conteneur qui range toutes les bouches */
+.bouches-decor {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -33,17 +42,20 @@
   width: 100%;
   z-index: 2;
 }
+
+/* Chaque bouche individuelle */
+.bouche-decor {
+  width: 60px;
+  height: auto;
+  cursor: pointer;
+  transition: all 0.3s;
+  filter: drop-shadow(0 2px 6px rgba(180,80,160,0.2));
+}
     .bouche-decor:hover {
       transform: scale(1.15);
       filter: hue-rotate(120deg) drop-shadow(0 4px 12px rgba(180,80,160,0.4));
     }
-    #vue-accueil h1 {
-      font-family: 'Montez', cursive;
-      color: #733e75;
-      font-size: 4rem;
-      margin-bottom: 20px;
-      z-index: 2;
-    }
+
     .scene {
       display: flex;
       gap: 60px;
