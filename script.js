@@ -1,3 +1,11 @@
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('Service Worker enregistré !', reg))
+      .catch(err => console.log('Erreur d’enregistrement :', err));
+  });
+}
+
 const vetements = {
 'Nimbes': [
 { nom: 'aureole-jaune-clair', fichier: 'aureole-jaune-clair.png'},
