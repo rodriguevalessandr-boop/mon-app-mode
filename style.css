@@ -15,28 +15,30 @@
   height: auto;
   position: relative;
 }
-    #vue-accueil {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
+ #vue-accueil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow: visible;
     }
 
-    #vue-accueil h1 {
-      font-family: 'Montez', cursive;
-      color: #733e75;
-      font-size: 4rem;
-      margin-bottom: 20px;
-      z-index: 2;
-    }
+#vue-accueil h1 {
+  font-family: 'Montez', cursive;
+  color: #733e75;
+  font-size: clamp(1.8rem, 5vw, 4rem); /* ← s'adapte à la largeur */
+  white-space: nowrap; /* ← interdit le retour à la ligne */
+  margin-bottom: 20px;
+  z-index: 2;
+}
+
 /* Le conteneur qui range toutes les bouches */
 .bouches-decor {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
   justify-content: center;
   margin-top: 20px;
   width: 100%;
@@ -56,17 +58,19 @@
       filter: hue-rotate(120deg) drop-shadow(0 4px 12px rgba(180,80,160,0.4));
     }
 
-    .scene {
-      display: flex;
-      gap: 60px;
-      justify-content: center;
-      margin-top: 40px;
-    }
-    .mannequin-carte img {
-      width: 260px;
-      height: auto;
-      transition: all 0.2s;
-    }
+.scene {
+  display: flex;
+  gap: clamp(20px, 5vw, 60px); /* ← l'espace entre les mannequins se réduit */
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.mannequin-carte img {
+  width: clamp(120px, 18vw, 220px); /* ← images qui rétrécissent avec l'écran */
+  height: auto;
+  transition: all 0.2s;
+}
+
     .mannequin-carte:hover img { transform: scale(1.3); }
     .mannequin-carte img { width: 220px; height: auto; }
     .mannequin-carte p { font-size: 1rem; font-weight: 800; color: #9b59b6; margin-top: 8px; }
